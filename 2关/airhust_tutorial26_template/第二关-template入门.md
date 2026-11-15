@@ -143,7 +143,7 @@ main 开头准备通信和参数
 ros::init(argc, argv, "template");
 ros::NodeHandle nh;
 ```
-![alt text](image/image-1.png)
+![alt text](image/image-1.png)  
 ros::init() 完成本进程使用 ROS 所需的初始化，并给节点设置名字。紧接着的 nh，是后面创建订阅、发布、服务客户端和读取参数时使用的入口。
 
 这里第一次遇到 ros:: 这样的写法，跟std::差不多，就是命名空间的意思

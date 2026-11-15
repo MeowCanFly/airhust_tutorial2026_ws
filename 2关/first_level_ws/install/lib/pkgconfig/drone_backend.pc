@@ -1,0 +1,8 @@
+prefix=/home/airhust/airhust_tutorial2026_ws/2关/first_level_ws/install
+
+Name: drone_backend
+Description: Description of drone_backend
+Version: 0.1.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: roscpp std_msgs geometry_msgs message_runtime
