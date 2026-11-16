@@ -52,12 +52,14 @@ def color_mask(image, lower, upper):
     """
     mask = cv2.inRange(image, np.array(lower), np.array(upper))
 
-    """ ————————————————————————————填空—————————————————————————————————
+    # 开始填空
+    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
+    # 开运算：先腐蚀后膨胀，去掉小毛刺/噪点
+    mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
+    # 闭运算：先膨胀后腐蚀，补上圆里的小洞
+    mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
+    # 结束填空
 
-
-
-
-        ————————————————————————————填空————————————————————————————————— """
     return mask
 
 
@@ -69,11 +71,15 @@ def find_blobs(mask, min_area=MIN_AREA):
     """
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     blobs = []
-    """ ————————————————————————————填空—————————————————————————————————
-    
 
-    
-        ————————————————————————————填空————————————————————————————————— """
+    # 开始填空
+    for contour in contours:
+        area = cv2.contourArea(contour)
+        if area >= min_area:
+            ((cx, cy), radius) = cv2.minEnclosingCircle(contour)
+            blobs.append(((int(cx), int(cy), int(radius), area)))
+    # 结束填空
+
     return blobs
 
 
@@ -90,19 +96,36 @@ def annotate(image, results):
     return canvas
 
 # 主程序：读图，逐个颜色抠掩膜、找色块，最后画图保存
+# 读图
 image = cv2.imread(IMAGE_PATH)
 results = []
 
+# 逐个颜色执行
 for name, (lower, upper) in COLOR_RANGES.items():
+    # 抠掩膜
     mask = color_mask(image, lower, upper)
-    """ ————————————————————————————填空—————————————————————————————————
     
-
-    
-        ————————————————————————————填空————————————————————————————————— """
+    # 开始填空
+    # 找色块
+    blobs = find_blobs(mask, MIN_AREA)
+    # 遍历色块
+    for blob in blobs:
+        # 解析每个色块
+        cx, cy, radius, area = blob
+        # 重新封装成dict
+        results.append({"color": name,
+                        "center": (cx, cy),
+                        "radius": radius})
+    # 结束填空
     
 
 print("共检测到 %d 个色块" % len(results))
+for result in results:
+    color = result["color"]
+    cx, cy = result["center"]
+    radius = result["radius"] 
+    area = 3.1415926 * radius * radius
+    print(f"{color:<7}({cx}, {cy})   {radius}       {area}")
 
 canvas = annotate(image, results)
 cv2.imwrite(SAVE_PATH, canvas)

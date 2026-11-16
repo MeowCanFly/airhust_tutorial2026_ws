@@ -12,5 +12,7 @@
         "**/devel": true
     },
 
-    "C_Cpp.intelliSenseEngine": "default"
+    "C_Cpp.intelliSenseEngine": "default",
+    "python.analysis.typeCheckingMode": "standard",
+    "python.analysis.autoImportCompletions": false
 }
