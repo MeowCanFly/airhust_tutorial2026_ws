@@ -55,12 +55,10 @@ def make_detector(family="25h9"):
     dictionary = None
     detector = None
 
-    """ ————————————————————————————填空—————————————————————————————————
-
-
-
-    
-        ————————————————————————————填空————————————————————————————————— """
+    # 开始填空
+    dictionary = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_APRILTAG_25H9)
+    detector = cv2.aruco.ArucoDetector(dictionary, cv2.aruco.DetectorParameters())
+    # 结束填空
     return dictionary, detector
 
 
@@ -71,13 +69,24 @@ def detect_tags(image, dictionary, detector):
     corners 的顺序是左上、右上、右下、左下。
     """
     results = []
-    """ ————————————————————————————填空—————————————————————————————————
-    
-
-
-
-
-        ————————————————————————————填空————————————————————————————————— """
+    # 开始填空
+    # 识别所有 AprilTag
+    corners, ids, _ = detector.detectMarkers(image)
+    # 压平 ids
+    ids = ids.flatten()
+    # 把角点数组形状改成 (4, 2)
+    corners = np.array(corners).reshape(4, 2)
+    # 四个角求平均，得到中心
+    center = corners.mean(axis=0)
+    # 遍历标签
+    for i, id in enumerate(ids):
+        # 封装每个标签的数据
+        result = {"id": id,
+                  "center": center,
+                  "corners": corners}
+        # 追加至结果list
+        results.append(result)
+    # 结束填空
     return results
 
 
