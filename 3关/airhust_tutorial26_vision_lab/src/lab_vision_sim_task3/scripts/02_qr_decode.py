@@ -50,13 +50,16 @@ def decode_qr(image):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     results = []
 
-    """ ————————————————————————————填空—————————————————————————————————
-
-
-
-
-
-        ————————————————————————————填空————————————————————————————————— """
+    # 开始填空
+    # 识别所有二维码
+    _, text, points, _ = detector.detectAndDecodeMulti(gray)
+    for i in range(len(text)):
+        # 封装每个二维码的数据
+        result = {"text": text[i],
+                  "points": points[i]}
+        # 追加至结果list
+        results.append(result)
+    # 结束填空
    
     return results
 
