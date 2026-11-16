@@ -64,13 +64,33 @@ def detect_objects(model, image, conf=CONF, iou=IOU):
     """
 
     detections = []
-    """————————————————————————————填空—————————————————————————————————
-    
-
-
-
-    
-       ————————————————————————————填空———————————————————————————————— """
+    # 开始填空
+    # 获取图片尺寸
+    height, width = image.shape[:2]
+    # 推理
+    results = model.predict(source=image, conf=conf, iou=iou, verbose=True)
+    # 拿到一张图的结果
+    result = results[0]
+    # 检测框
+    boxes = result.boxes
+    # 遍历检测框
+    for i in range(len(boxes)):
+        # 取四个坐标
+        xyxy = boxes.xyxy[i].tolist()
+        # 计算中心点归一化坐标
+        cx = (xyxy[0] + xyxy[2]) / 2 / width
+        cy = (xyxy[1] + xyxy[3]) / 2 / height
+        # 封装中心点归一化坐标
+        center = (cx, cy)
+        # 封装检测结果
+        detection = {"cls_id": boxes.cls,
+                     "cls_name": result.names[boxes.cls.item()],
+                     "conf": boxes.conf[i].item(),
+                     "xyxy": xyxy,
+                     "center": center}
+        # 追加至结果list
+        detections.append(detection)
+    # 结束填空
 
     return detections
 
