@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 # 唯一的环境入口。
 #
-#   source ~/drone_ws/setup.sh
+#   source ~/airhust_tutorial2026_ws/1关/airhust_tutorial26_ros_basics/setup.sh
 #
 # 生效之后：ROS 本体 + 后端（install 空间）+ 你的工作空间，都在环境里。
 # 每次 catkin_make 之后重新 source 一次；没 source 就 rosrun，会看到
