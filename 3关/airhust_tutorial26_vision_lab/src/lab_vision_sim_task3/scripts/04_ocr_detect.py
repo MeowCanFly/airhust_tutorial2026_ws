@@ -68,11 +68,10 @@ def read_text(image):
     """
     config = "--psm %d" % PSM
     text = ""
-    """ ————————————————————————————填空—————————————————————————————————
-
-                这里只要填一行，cv简单吧孩子，和我一起，成为调包侠吧
-
-        ————————————————————————————填空————————————————————————————————— """
+    # 开始填空
+    # 调用 tesseract 识别文字
+    text = pytesseract.image_to_string(image, LANG, config)
+    # 结束填空
     return text
 
 
