@@ -138,7 +138,7 @@ int main(int argc, char **argv)
             last_request = ros::Time::now();
           } 
         }
-	    else if(ros::Time::now() - last_request >= ros::Duration(3.0))
+	      else if(ros::Time::now() - last_request >= ros::Duration(3.0))
         {
           mission_num = 2;
           last_request = ros::Time::now();

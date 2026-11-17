@@ -10,5 +10,8 @@
 
     "C_Cpp.intelliSenseEngine": "default",
     "python.analysis.typeCheckingMode": "standard",
-    "python.analysis.autoImportCompletions": false
+    "python.analysis.autoImportCompletions": false,
+    "python.analysis.extraPaths": [
+        "/opt/ros/noetic/lib/python3/dist-packages"
+    ]
 }

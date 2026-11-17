@@ -15,6 +15,7 @@ catkin_package()
 
 catkin_install_python(PROGRAMS
   scripts/vision_mission.py
+  scripts/mission_control.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
