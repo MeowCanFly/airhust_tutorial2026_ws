@@ -99,9 +99,11 @@ bool mission_circle_cruise(float center_x,
 	float current_x = local_pos.pose.pose.position.x;
 	float current_y = local_pos.pose.pose.position.y;
 	float current_z = local_pos.pose.pose.position.z;
+	float center_x_abs = center_x + init_position_x_take_off;
+	float center_y_abs = center_y + init_position_y_take_off;
 	// 计算当前位置相对圆心的角度 current_angle
-	float offset_x = current_x - center_x;
-	float offset_y = current_y - center_y;
+	float offset_x = current_x - center_x_abs;
+	float offset_y = current_y - center_y_abs;
 	float current_angle = std::atan2(offset_y, offset_x);
 	if (mission_circle_cruise_flag == false)
 	{
@@ -114,8 +116,8 @@ bool mission_circle_cruise(float center_x,
 	//前方目标角 = current_angle + 20°
 	float target_angle = current_angle + lookahead_angle;
 	//用圆心、半径和前方目标角算出 target_x、target_y
-	float target_x = center_x + radius*std::cos(target_angle);
-	float target_y = center_y + radius*std::sin(target_angle);
+	float target_x = center_x_abs + radius * std::cos(target_angle);
+	float target_y = center_y_abs + radius * std::sin(target_angle);
 	//计算无人机到 target 的位置误差
 	float error_x = target_x - current_x;
 	float error_y = target_y - current_y;
